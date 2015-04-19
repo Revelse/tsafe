@@ -1,0 +1,13 @@
+## Interface: 60000
+## Version: 1.0
+## Title: tSave
+## Notes: tSave
+## Notes-deDE: tSave
+## Author: Revelse
+## SavedVariables: tSaveDB
+
+constants.lua
+API.lua
+browse.lua
+modify.lua
+main.lua
