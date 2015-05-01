@@ -19,6 +19,7 @@ function f:onEvent(frame,addon)
 		tSave.Browse.CreateWindow()
 		tSave.main.Init()
 		tSave.Modify.CreateWindow()
+		tSave.Macro.CreateWindow()
 		--CreateSettingsWindow()
 		f:UnregisterEvent("ADDON_LOADED")
 	end

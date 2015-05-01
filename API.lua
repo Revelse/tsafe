@@ -17,6 +17,12 @@ function EnableFrameMovement(frame)
 	frame:SetScript("OnDragStop", frame.StopMovingOrSizing)	
 end
 
+function table.copy(orig)
+	-- ToDo:
+	return orig
+end
+
+
 function DressUpModelWithSet(model,set)
 	for slot, item in pairs(set.Items) do
 		if slot == 16 or slot == 17 then
@@ -32,7 +38,7 @@ end
 function SetEnchantLink(item,slot,enchant)
 	local _,link,_,_,_,_,_,_,kind = GetItemInfo(item)
 	if ( slot == 16 or slot == 17 ) and enchant then
-		return string.format(string.gsub(link, "item:(%d+):0", "item:%1:%%d"), enchant)
+		return string.format(string.gsub(link or "", "item:(%d+):0", "item:%1:%%d"), enchant or 0)
 	end
 	return item
 end

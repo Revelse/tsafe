@@ -9,5 +9,6 @@
 constants.lua
 API.lua
 browse.lua
+macro.lua
 modify.lua
 main.lua

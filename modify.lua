@@ -1,7 +1,7 @@
 local _,tSave = ...
 
 local MAX_ROT = math.pi*2
-local STEP = (MAX_ROT)/720
+local STEP = MAX_ROT/720
 
 tSave.Modify = {}
 tSave.Modify.TempSet = {}
@@ -9,7 +9,9 @@ tSave.Modify.Mode = false
 
 tSave.Modify.SaveEntrys = {
 	[1] = { text = "Save", func = function(...) return tSave.main.SaveSet(tSave.Modify.TempSet) end, tooltip = "Save the Set", hasArrow = false, MenuList = nil},
-	[2] = { text = "Copy", func = nil, tooltip = "Copy a Set", hasArrow = true, MenuList = "CopyEntrys"}
+	[2] = { text = "Copy", func = nil, tooltip = "Copy a Set", hasArrow = true, MenuList = "CopyEntrys"},
+	[3] = { text = "Load Macro", func = function(...) tSave.Macro.MainFrame:Show() end, tooltip = "Load Macro", hasArrow = false },
+	[4] = { text = "Add Item", func = function(...) print("Not implented yet.") end, tooltip ="Add Item", hasArrow = false }
 }
 
 tSave.Modify.EnchantEntrys = {
@@ -79,11 +81,11 @@ function tSave.Modify.CreateWindow()
 	shortcut:SetSize(150,30)
 	shortcut.String = shortcut:CreateFontString(nil,"ARTWORK")
 	shortcut.String:SetFont("Fonts\\FRIZQT__.TTF", 16)
-	shortcut.String:SetText("Copy & Save")
+	shortcut.String:SetText("Save & Useful")
 	shortcut.String:SetPoint("CENTER",0,0)
 	shortcut.String:SetSize(150,30)
-	shortcut:SetScript("onEnter", function () shortcut.String:SetText("|c00FFFF00Copy & Save") end )
-	shortcut:SetScript("onLeave", function () shortcut.String:SetText("|c00FFFFFFCopy & Save") end )
+	shortcut:SetScript("onEnter", function () shortcut.String:SetText("|c00FFFF00| Save & Useful") end )
+	shortcut:SetScript("onLeave", function () shortcut.String:SetText("|c00FFFFFFSave & Useful") end )
 	shortcut:SetScript("onClick",
 		function(widget,btn,down)
 			if btn == "LeftButton" and not down then
@@ -130,7 +132,7 @@ function tSave.Modify.CreateWindow()
 	shortcut.String:SetText("Enchant")
 	shortcut.String:SetPoint("CENTER",0,0)
 	shortcut.String:SetSize(150,30)
-	shortcut:SetScript("onEnter", function () shortcut.String:SetText("|c00FFFF00Enchant") end )
+	shortcut:SetScript("onEnter", function () shortcut.String:SetText("|c00FFFF00| Enchant") end )
 	shortcut:SetScript("onLeave", function () shortcut.String:SetText("|c00FFFFFFEnchant") end )
 	shortcut:SetScript("onClick",
 		function(widget,btn,down)
@@ -183,17 +185,42 @@ function tSave.Modify.CreateWindow()
 	tSave.Modify.Grid.Container.Name = tSave.Modify.CreateEditBox("TOPLEFT",0, -20, tSave.Modify.Grid.Container, "Name: ")
 	tSave.Modify.Grid.Container.Name.onCallBack = tSave.Modify.NickChange
 	
+	tSave.Modify.Grid.Container.AddItem = tSave.Modify.CreateEditBox("TOPLEFT", 0, -80, tSave.Modify.Grid.Container, "Add Item: ")
+	tSave.Modify.Grid.Container.AddItem.onCallBack = tSave.Modify.ItemEditAdd
+	
 	tSave.Modify.Grid.Container.Items = {}
 	local i = 0
 	for key, value in ipairs(tSave.Constants.SlotInfo) do
-		tSave.Modify.Grid.Container.Items[value[1]] = tSave.Modify.CreateEditBox("TOPLEFT", 0, -80+(-(i*60)), tSave.Modify.Grid.Container, value[2]..": ")
+		tSave.Modify.Grid.Container.Items[value[1]] = tSave.Modify.CreateEditBox("TOPLEFT", 0, -140+(-(i*60)), tSave.Modify.Grid.Container, value[2]..": ")
 		tSave.Modify.Grid.Container.Items[value[1]].InfoSlot = key
 		tSave.Modify.Grid.Container.Items[value[1]].Slot = value[1]
 		tSave.Modify.Grid.Container.Items[value[1]].onCallBack = tSave.Modify.ItemEditApply
 		i = i + 1
 	end	
 	
+	tSave.Modify.Macro = CreateFrame("Frame", "tSaveModifyMacroFrame", UIParent, "ButtonFrameTemplate")
+	
 	tSave.Modify.MainFrame:Hide()
+end
+
+function tSave.Modify.ItemEditAdd(widget,item)
+	local item = tonumber(item)
+	local _,_,_,_,_,_,_,_,kind = GetItemInfo(item)
+	if not item or not kind then return end
+	local slot = tSave.Constants.ValidNicks[kind]
+	tSave.Modify.EquipItem(item,slot)
+end
+
+function tSave.Modify.CheckMacroText(text)
+	-- Split text when ; or \n appears
+	local text = string.split(text:gsub(";","\n") or "","\n") or {}
+	-- Check for items
+	for key, value in ipairs(text) do
+		local valueSplitted = string.split(value," ")
+		if value:find(".item") then
+			tSave.Modify.EquipItem(tonumber(valueSplitted[3]),tonumber(valueSplitted[2]))
+		end
+	end
 end
 
 function tSave.Modify.CopySet(setId)
@@ -329,7 +356,7 @@ function tSave.Modify.OnShow(mode)
 		tSave.Modify.TempSet.Enchants = {}
 		tSave.Modify.Mode = "New"
 	else
-		tSave.Modify.TempSet = tSaveDB.Sets[tSave.Morph.Selected]
+		tSave.Modify.TempSet = table.copy(tSaveDB.Sets[tSave.Morph.Selected])
 	end
 	tSave.Modify.Dress:SetUnit("player")
 	tSave.Modify.Dress:SetCustomRace(tSave.Client.Race,tSave.Morph.RealSex == "Male" and 0 or 1)
