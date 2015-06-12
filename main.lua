@@ -6,7 +6,7 @@ tSaveDB.Sets = tSaveDB.Sets == nil and {} or tSaveDB.Sets
 tSave.Client = {}
 tSave.Morph = {}
 tSave.Client.RealSex = UnitSex("player") == 2 and "Male" or "Female"
-tSave.Client.Sex = UnitSex("player") == 2 and "Male" or "Female"
+tSave.Client.Sex = tSave.Client.RealSex
 tSave.Client.Race = select(2,UnitRace("player"))
 
 tSave.Morph.Race = tSave.Client.Race
@@ -132,7 +132,7 @@ function tSave.main.UpdateDemonstrationModel()
 	DressUpModelWithSet(tSave.Browse.Dress,tSaveDB.Sets[tSave.Morph.Selected] or {Items={}})
 end
 
--- Important Callback
+-- Important
 
 function tSaveChangeGender()
 	tSave.Client.Sex = tSave.Morph.Sex

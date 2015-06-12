@@ -1,6 +1,5 @@
 local _,tSave = ...
 
-
 tSave.Constants = {}
 
 tSave.Constants.Races = {

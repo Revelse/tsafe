@@ -11,7 +11,7 @@ tSave.Modify.SaveEntrys = {
 	[1] = { text = "Save", func = function(...) return tSave.main.SaveSet(tSave.Modify.TempSet) end, tooltip = "Save the Set", hasArrow = false, MenuList = nil},
 	[2] = { text = "Copy", func = nil, tooltip = "Copy a Set", hasArrow = true, MenuList = "CopyEntrys"},
 	[3] = { text = "Load Macro", func = function(...) tSave.Macro.MainFrame:Show() end, tooltip = "Load Macro", hasArrow = false },
-	[4] = { text = "Add Item", func = function(...) print("Not implented yet.") end, tooltip ="Add Item", hasArrow = false }
+	[4] = { text = "Add Item", func = function(...) print("Use the editbox called \"Add Item\"") end, tooltip ="Add Item", hasArrow = false }
 }
 
 tSave.Modify.EnchantEntrys = {
