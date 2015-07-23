@@ -354,7 +354,7 @@ function tSave.Modify.OnShow(mode)
 		tSave.Modify.TempSet.Name = math.random(999999)
 		tSave.Modify.TempSet.Items = {}
 		tSave.Modify.TempSet.Enchants = {}
-		tSave.Modify.Mode = "New"
+		tSave.Modify.Mode = "New"	
 	else
 		tSave.Modify.TempSet = table.copy(tSaveDB.Sets[tSave.Morph.Selected])
 	end
@@ -363,6 +363,11 @@ function tSave.Modify.OnShow(mode)
 	tSave.Modify.Dress:Undress()
 	tSave.Modify.MainFrame:SetScript("onUpdate", tSave.Modify.OnUpdate)	
 	tSave.Modify.NickChange(nil,tSave.Modify.TempSet.Name)
+	-- suppress headglitch
+	if type(tSave.Modify.TempSet[1]) == "nil" then
+		tSave.Modify.Dress:TryOn(44742)
+		tSave.Modify.Dress:UndressSlot(1)
+	end
 	for key, value in pairs(tSave.Modify.TempSet.Items) do
 		tSave.Modify.EquipItem(tonumber(value),key)
 	end	

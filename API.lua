@@ -24,6 +24,10 @@ end
 
 
 function DressUpModelWithSet(model,set)
+	-- suppress headglitch
+	model:TryOn(44742)
+	model:UndressSlot(1)
+
 	for slot, item in pairs(set.Items) do
 		if slot == 16 or slot == 17 then
 			local enchant = set.Enchants[slot-15] or 0
@@ -64,6 +68,3 @@ function FormSetToMacroString(set)
 	
 	return str
 end
-
-
-
