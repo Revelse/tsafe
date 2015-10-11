@@ -17,6 +17,17 @@ function EnableFrameMovement(frame)
 	frame:SetScript("OnDragStop", frame.StopMovingOrSizing)	
 end
 
+function table.findEx (self,lf)
+	for key, value in pairs(self) do
+		if type(value) == "table" and type(lf) ~= "table" then
+			table.findEx(self,lf)
+		elseif key == value then
+			return true
+		end
+	end
+	return false
+end
+
 function table.copy(orig)
 	-- ToDo:
 	return orig

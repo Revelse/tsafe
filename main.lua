@@ -14,18 +14,24 @@ tSave.Morph.Sex = tSave.Client.Sex
 tSave.Morph.Selected = false
 tSave.Morph.Mode = false
 
-function f:onEvent(frame,addon)
-	if addon == addonName then
+function f:onEvent(event,addon)
+	if addon == addonName and event == "ADDON_LOADED" then
 		tSave.Browse.CreateWindow()
 		tSave.main.Init()
 		tSave.Modify.CreateWindow()
 		tSave.Macro.CreateWindow()
-		--CreateSettingsWindow()
+		--tSave.Settings.CreateWindow()
 		f:UnregisterEvent("ADDON_LOADED")
+	else
+		print (("|c00FFFF00[tSave] |c00FFFFFFversion %s loaded"):format(GetAddOnMetadata("tSave","Version")))
+		print "|c00FF0000NOTE|c00FFFFFF that tMorph is required for the \"MORPH\"-Button"
+		f:UnregisterEvent("PLAYER_LOGIN")	
 	end
 end
+
 f:SetScript("onEvent", f.onEvent)
 f:RegisterEvent("ADDON_LOADED")
+f:RegisterEvent("PLAYER_LOGIN")
 
 tSave.main = CreateFrame("Frame")
 

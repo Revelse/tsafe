@@ -22,13 +22,14 @@ tSave.Modify.EnchantEntrys = {
 tSave.Modify.Enchants = {
 {0,"None"},
 {4097,"Power Torrent"},
-{5125,"Bloody Dancing Steel"},
+{257,"Bloody Dancing Steel"},
 {2673,"Mongoose"},
 {3846,"Mayor Healing"},
 {3225,"Executioner"},
 {4066,"Mending"},
 {5397,"Primal Victory"},
 {3854,"41+ Mana"},  
+{258,"Windzorn Buff"},
 }
 
 function tSave.Modify.CreateWindow()
