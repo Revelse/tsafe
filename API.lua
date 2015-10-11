@@ -19,10 +19,10 @@ end
 
 function table.findEx (self,lf)
 	for key, value in pairs(self) do
-		if type(value) == "table" and type(lf) ~= "table" then
+		if key == value then
+			return true	
+		elseif type(value) == "table" then
 			table.findEx(self,lf)
-		elseif key == value then
-			return true
 		end
 	end
 	return false
