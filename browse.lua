@@ -34,7 +34,7 @@ function tSave.Browse.CreateWindow()
 	tSave.Browse.Grid.Container:SetSize(168,50)
 	tSave.Browse.Grid:SetScrollChild(tSave.Browse.Grid.Container)
 	
-	tSave.Browse.Morph = CreateFrame("Button",nil,tSave.Browse.MainFrame,"UIPanelButtonTemplate,SecureActionButtonTemplate")
+	tSave.Browse.Morph = CreateFrame("Button",nil,tSave.Browse.MainFrame,"UIPanelButtonTemplate, SecureActionButtonTemplate")
 	tSave.Browse.Morph:SetSize(150,30)
 	tSave.Browse.Morph:SetPoint("TOPLEFT",425,-370)
 	tSave.Browse.Morph:SetText("Morph")
